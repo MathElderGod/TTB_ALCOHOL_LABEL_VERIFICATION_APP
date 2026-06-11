@@ -29,6 +29,8 @@ via [TTB Alcohol Verification App](https://matheldergod.github.io/TTB_ALCOHOL_LA
 
 ## How to Use
 
+[Watch Demo](Videos\demo.mp4)
+
 ### Step 1 — Upload the label image
 - Click the **Label Image** drop zone or drag and drop a file
 - Supported formats: JPG, PNG, WEBP
