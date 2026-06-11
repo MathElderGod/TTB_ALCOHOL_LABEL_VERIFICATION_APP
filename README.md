@@ -24,6 +24,7 @@ No build step, no dependencies to install, no server required.
 ### Open directly in a browser
 
 via [TTB Alcohol Verification App](https://matheldergod.github.io/TTB_ALCOHOL_LABEL_VERIFICATION_APP/)
+
 ---
 
 ## How to Use
@@ -95,10 +96,13 @@ ttb-cola-verification/
 ├── index.html          # Application shell and UI structure
 ├── styles.css          # All styles (design tokens, layout, result table)
 ├── app.js              # All application logic (OCR pipeline, parsing, comparison)
-├── docs/
+├── Docs/
 │   └── APPROACH.md     # Technical approach, architecture decisions, assumptions
-├── .gitignore
-└── README.md           # This file
+├── Images/   
+│   └── various images  # label images for alcoholic beverages that the user can test on
+├── Text-files/   
+│   └── txt files       # consists of various text files for this application. ex: cola label examples prompts
+└── README.md           # This very file
 ```
 
 ---
@@ -135,7 +139,3 @@ Requires: Canvas API, File API, Blob API, async/await (ES2017+). All are standar
 No other runtime dependencies. No build tools, bundlers, or package manager required.
 
 ---
-
-## License
-
-This project is a prototype developed for internal TTB evaluation purposes. Not intended for public distribution or production use.
