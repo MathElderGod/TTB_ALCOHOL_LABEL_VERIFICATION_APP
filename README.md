@@ -8,9 +8,12 @@ A browser-based prototype for verifying alcoholic beverage labels against COLA (
 
 ## Overview
 
-This tool allows a TTB reviewer to upload a label image and paste the corresponding COLA application text. The tool reads the label via local OCR, then checks whether each required field on the application is present and correct on the label. Results are displayed in a structured table with per-field pass/fail status.
+This tool allows a TTB reviewer to upload a label image and paste the corresponding COLA application text. The tool reads the label via local OCR, then checks whether each required field on the application is present and correct on the label. 
+Results are displayed in a structured table with per-field pass/fail status.
 
-**All processing is entirely local.** No images, text, or results are transmitted to any server. No data is retained between sessions.
+**All processing is entirely local.** 
+
+No images, text, or results are transmitted to any server. No data is retained between sessions.
 
 ---
 
@@ -18,32 +21,9 @@ This tool allows a TTB reviewer to upload a label image and paste the correspond
 
 No build step, no dependencies to install, no server required.
 
-### Option A — Open directly in a browser
+### Open directly in a browser
 
-1. Download or clone this repository
-2. Open `index.html` in any modern browser (Chrome, Firefox, Edge, Safari)
-3. Upload a label image and paste the application text, then click **Run Verification**
-
-```bash
-git clone https://github.com/YOUR_USERNAME/ttb-cola-verification.git
-cd ttb-cola-verification
-open index.html        # macOS
-start index.html       # Windows
-xdg-open index.html    # Linux
-```
-
-### Option B — Serve locally (recommended for consistent behavior)
-
-```bash
-# Python 3
-python3 -m http.server 8080
-
-# Node.js (if installed)
-npx serve .
-```
-
-Then navigate to `http://localhost:8080` in your browser.
-
+via [TTB Alcohol Verification App](https://matheldergod.github.io/TTB_ALCOHOL_LABEL_VERIFICATION_APP/)
 ---
 
 ## How to Use
@@ -63,7 +43,8 @@ Class/Type: Wheat Beer
 Alcohol Content: 4% Alc./Vol.
 Net Contents: 1 Pint
 Bottler: Example Brewing Co. Baltimore, MD
-GOVERNMENT WARNING: (1) According to the Surgeon General, women should not drink alcoholic beverages during pregnancy because of the risk of birth defects. (2) Consumption of alcoholic beverages impairs your ability to drive a car or operate machinery, and may cause health problems.
+GOVERNMENT WARNING: (1) According to the Surgeon General, women should not drink alcoholic beverages during pregnancy because of the risk of birth defects. 
+(2) Consumption of alcoholic beverages impairs your ability to drive a car or operate machinery, and may cause health problems.
 ```
 
 ### Step 3 — Run Verification
