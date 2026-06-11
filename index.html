@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>TTB COLA Label Verification</title>
+      <link rel="stylesheet" href="styles.css">
+   </head>
+   <body>
+      <header>
+         <div class="header-inner">
+            <div class="ttb-seal">TTB</div>
+            <div class="header-text">
+               <h1>Alcohol Label Verification System</h1>
+               <p>Tobacco Tax and Trade Bureau &nbsp;·&nbsp; COLA Review Tool</p>
+            </div>
+            <div class="header-badge">Prototype</div>
+         </div>
+      </header>
+      <div class="main">
+         <div class="notice">
+            <strong>No data is retained.</strong> All processing happens locally in your browser via OCR + canvas image preprocessing. Nothing is uploaded or transmitted to any server.
+         </div>
+         <div class="upload-grid">
+            <!-- Label image 1 -->
+            <div class="panel">
+               <div class="panel-head">
+                  <span class="num">1</span>
+                  <h2>Label Image <span class="panel-head-sub" id="img1SubLabel">(Front / Only)</span></h2>
+               </div>
+               <div class="panel-body">
+                  <div class="dropzone" id="labelDrop">
+                     <input type="file" id="labelFile" accept="image/jpeg,image/png,image/webp,image/gif" aria-label="Upload label image">
+                     <div class="dropzone-icon">🏷️</div>
+                     <p>Drop label image here or click to browse</p>
+                     <small>JPG, PNG, WEBP — clear, straight-on photo works best</small>
+                  </div>
+                  <div id="labelPreviewWrap" style="display:none">
+                     <div class="preview-wrap"><img id="labelPreview" src="data:image/gif;base64,R0lGODlhAQABAAAAACwAAAAAAQABAAA=" alt="Label preview"></div>
+                     <div class="preview-filename" id="labelFilename"></div>
+                  </div>
+               </div>
+            </div>
+            <!-- COLA application form -->
+            <div class="panel">
+               <div class="panel-head">
+                  <span class="num">2</span>
+                  <h2>COLA Application Data</h2>
+               </div>
+               <div class="panel-body">
+                  <p class="field-hint">
+                     Paste the application text as-is. Include all fields: brand name, class/type, ABV, net contents, bottler name &amp; address, and the full government warning exactly as it appears on the application.
+                  </p>
+                  <textarea
+class="form-textarea"
+id="formText"
+placeholder="Example:
+Brand Name: Malt & Hop Brewery
+Class/Type: Ale
+Alcohol Content: 5% Alc./Vol.
+Net Contents: .9 Fl. Oz.
+Bottler: Malt and Hop Brewery, Portland, OR 97201
+GOVERNMENT WARNING: (1) According to the Surgeon General, women should not drink alcoholic beverages during pregnancy because of the risk of birth defects. (2) Consumption of alcoholic beverages impairs your ability to drive a car or operate machinery, and may cause health problems."
+                     ></textarea>
+               </div>
+            </div>
+         </div>
+         <!-- Second image toggle -->
+         <div class="second-image-toggle-row">
+            <label class="toggle-label">
+            <input type="checkbox" id="secondImageToggle">
+            <span class="toggle-box"></span>
+            Label has a separate back image
+            <span class="toggle-hint">— upload a second image (front + back will be read together)</span>
+            </label>
+         </div>
+         <!-- Second image panel (hidden by default) -->
+         <div id="secondImagePanel" style="display:none" class="second-panel-wrap">
+            <div class="panel">
+               <div class="panel-head">
+                  <span class="num">1b</span>
+                  <h2>Label Image (Back)</h2>
+               </div>
+               <div class="panel-body">
+                  <div class="dropzone" id="labelDrop2">
+                     <input type="file" id="labelFile2" accept="image/jpeg,image/png,image/webp,image/gif" aria-label="Upload back label image">
+                     <div class="dropzone-icon">🏷️</div>
+                     <p>Drop back label image here or click to browse</p>
+                     <small>OCR text from both images will be merged before comparison</small>
+                  </div>
+                  <div id="labelPreviewWrap2" style="display:none">
+                     <div class="preview-wrap"><img id="labelPreview2" src="data:image/gif;base64,R0lGODlhAQABAAAAACwAAAAAAQABAAA=" alt="Back label preview"></div>
+                     <div class="preview-filename" id="labelFilename2"></div>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <!-- Actions -->
+         <div class="submit-row">
+            <button class="btn-verify" id="verifyBtn" disabled>Run Verification</button>
+            <button class="btn-clear"  id="clearBtn">Clear All</button>
+            <span id="status">
+            <span class="spinner"></span>
+            <span id="statusText">Reading label…</span>
+            </span>
+         </div>
+         <div class="error-box" id="errorBox"></div>
+         <!-- Raw OCR output — collapsible, for transparency & debugging -->
+         <div id="ocrDebugWrap" style="display:none">
+            <details>
+               <summary class="ocr-summary">▶ Raw OCR text extracted from label(s) — click to expand</summary>
+               <pre id="ocrDebugText" class="ocr-pre"></pre>
+            </details>
+         </div>
+         <!-- Preprocessed image debug -->
+      <div id="preprocessDebugWrap" style="display:none">
+         <details>
+            <summary class="ocr-summary">▶ Preprocessed label image sent to OCR — click to expand (useful for troubleshooting)</summary>
+            <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:8px;">
+               <div>
+                  <div style="font-size:11px;color:var(--gray3);margin-bottom:4px;">Image 1 (binarized)</div>
+                  <img id="preprocessPreview1" style="max-width:340px;max-height:220px;border:1px solid var(--gray1);border-radius:var(--radius);" alt="Preprocessed label 1">
+               </div>
+               <div id="preprocessPreview2Wrap" style="display:none">
+                  <div style="font-size:11px;color:var(--gray3);margin-bottom:4px;">Image 2 (binarized)</div>
+                  <img id="preprocessPreview2" style="max-width:340px;max-height:220px;border:1px solid var(--gray1);border-radius:var(--radius);" alt="Preprocessed label 2">
+               </div>
+            </div>
+            <p style="font-size:11px;color:var(--gray3);margin-top:8px;">If text is illegible in the preprocessed view, the source image may be too low-resolution or contrast is inverted. Try a higher-quality scan or photograph with even lighting.</p>
+         </details>
+      </div>
+      <!-- Results -->
+         <div id="results">
+            <div class="result-header" id="resultHeader">
+               <span class="result-icon" id="resultIcon"></span>
+               <div>
+                  <div class="result-verdict" id="resultVerdict"></div>
+                  <div class="result-sub"    id="resultSub"></div>
+               </div>
+            </div>
+            <div class="result-body">
+               <div class="bold-notice">
+                  ⚠ <strong>Bold check always required:</strong> OCR reads plain text only — it cannot detect font weight.
+                  Even if Government Warning shows <strong>✔ Match</strong>, you must visually confirm that
+                  <strong>"GOVERNMENT WARNING:"</strong> is printed in <strong>bold</strong> on the physical label or source file.
+                  If it is not bold, reject the application regardless of text match.
+               </div>
+               <table class="fields-table">
+                  <thead>
+                     <tr>
+                        <th>Field</th>
+                        <th>Found on Label</th>
+                        <th>On Application</th>
+                        <th>Status</th>
+                     </tr>
+                  </thead>
+                  <tbody id="fieldsBody"></tbody>
+               </table>
+               <div class="summary-strip" id="summaryStrip"></div>
+            </div>
+         </div>
+      </div>
+      <footer>
+         TTB COLA Verification Prototype &nbsp;·&nbsp; For internal evaluation use only &nbsp;·&nbsp; Not for production deployment
+      </footer>
+      <script src='https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js'></script>
+      <script src="app.js"></script>
+   </body>
+</html>

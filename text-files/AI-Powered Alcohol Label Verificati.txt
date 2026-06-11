@@ -1,0 +1,92 @@
+AI-Powered Alcohol Label Verification App
+
+- the TTB reviews about 150,000 label applications a year.
+- small team of less than 50 agents that handles these labels
+	- small due to budget cuts
+- been doing things the same since (certificate of label approval) COLA system implemented in 2003
+- straight forward
+	- agents pulls up application
+	- looks at label artwork
+	- check if what is on label matches what is on application. 
+		- brand name match, abv correct, government warning? 
+	- should take about 5-10 minutes for a human being to greenlight an application
+	- more if there are issues. 
+- basic data entry verification
+- expect results back in about 5 seconds or less, or NOBODY will use it. 
+- BASIC UI
+	- upload label
+	- upload form
+		- return if they match
+		- if not a match, then state what doesn't match
+- NO OVERENGINEERING AS IT IS BASIC DATA VERIFICATION
+- Implement batch testing? this means we need some sort of multiple label uploader.....that deals with 200+, or 300+ labels....
+	- this seems complex as labels could pertain to separate forms....
+	- perhaps we must assume if batch labels are uploaded, they correspond to one form....
+- could be overengineering....might be best to ignore this request for multiple label uploader if too complex?
+
+Current Infastructure
+- Azure since 2019
+- COLA system built on .NET
+- quote $4.2 million dollars for a full rebuild! YIKES!
+
+- the application should just be some sort of prototype. 
+- I believe BASIC vanilla HTML, CSS, JAVASCRIPT should do the trick. 
+- stick to the basics. nothing pretty and nothing super fancy or complex. KEEP IT SIMPLE STUPID
+- NO DATA STORAGE. ONCE SOMETHING IS UPLOADED FOR COMPARISON AND THE DATA IS PROCESSED AND THE RESULTS ARE GIVEN, THE DATA UPLOAD SHOULD BE REMOVED IMMEDIATELY
+- low security risk if we stick with basic vanilla HTML, CSS, and JS. 
+
+- NO CLOUDE FUNNY BUSINESS. SHOULD JUST BE A BASIC WEB APPLICATION
+
+- data verification should use judgement to determine a match
+	- example: the brand name was 'STONE'S THROW' on the label but 'Stone's Throw' in the application. Technically a mismatch? Sure. But it's obviously the same thing. You need judgment.
+
+		- Basic way to string compare once the data is extracted for certain cases. 
+
+- Stakeholder shares: one thing I'd say is the warning statement check is actually trickier than it sounds. It has to be exact. Like, word-for-word, and the 'GOVERNMENT WARNING:' part has to be in all caps and bold. Sarah probably mentioned this but people try to get creative with the warning all the time. Smaller font, different wording, burying it in tiny text. I caught one last month where they used 'Government Warning' in title case instead of all caps. Rejected.
+	
+	- these specific cases need to be exact, so they can be hardcoded for accuracy. No data correction when extracting it from the label itself, to ensure the comparison is exact. if it is not, then we throw the exact place the mismatch exists and why.
+
+- would be nice for this prototype application to handle images that aren't perfect. ie: shot in wierd angles, bad lighting, or glare on the bottle. 
+- if these appears to be too complex to handle we can simply throw a rejection message and ask the user to upload a better image of the label. 
+
+Technical Requirements
+
+You are free to use any programming languages, frameworks, or libraries you prefer. We want to see what kind of engineering, design, and integration decisions you make.
+
+- BUT I RECOMMEND WE USE basic html, CSS, and JavaScript. Not sure, but we might have to use at lease one library to ensure we can extract the data from the label image, and the form, but I am not sure at this level, since I haven't dealt with something like that in my level of expertise so far. 
+
+Additional Context
+About TTB Label Requirements
+For reference, TTB requires specific information on alcohol beverage labels. The exact requirements vary by beverage type (beer, wine, distilled spirits) but common elements include:
+
+1. Brand name
+2. Class/type or other designation
+3. Alcohol content (with some exceptions for certain wine/beer)
+4. Net contents
+5. Name and address of bottler/producer
+6. Country of origin for imports
+7. Government Health Warning Statement: GOVERNMENT WARNING: (1) According to the Surgeon General, women should not drink alcoholic beverages during pregnancy because of the risk of birth defects. (2) Consumption of alcoholic beverages impairs your ability to drive a car or operate machinery, and may cause health problems.
+
+
+We encourage you to review TTB's guidelines at ttb.gov for additional context on label requirements.
+
+Sample Label
+Your app should handle labels containing information like the example below:
+
+Example Distilled Spirits Label Fields:
+
+Brand Name: "OLD TOM DISTILLERY"
+Class/Type: "Kentucky Straight Bourbon Whiskey"
+Alcohol Content: "45% Alc./Vol. (90 Proof)"
+Net Contents: "750 mL"
+Government Warning: [Standard government warning text]
+We encourage you to create or source additional test labels—AI image generation tools work well for this.
+
+Evaluation Criteria
+Correctness and completeness of core requirements
+Code quality and organization
+Appropriate technical choices for the scope
+User experience and error handling
+Attention to requirements
+Creative problem-solving
+We understand this is time-constrained. A working core application with clean code is preferred over ambitious but incomplete features. Document any trade-offs or limitations.
