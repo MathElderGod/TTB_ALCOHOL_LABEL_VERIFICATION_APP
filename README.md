@@ -6,6 +6,19 @@ A browser-based prototype for verifying alcoholic beverage labels against COLA (
 
 ---
 
+## ⚠ Disclaimer
+
+This tool is a functional prototype developed for evaluation and demonstration purposes only. While core verification workflows have been tested, it is not a finished product and should not be used as the sole basis for any official COLA determination.
+
+Users may encounter unexpected behavior including, but not limited to: incorrect field extraction on unusually formatted labels, OCR misreads on low-resolution or stylized images, and edge cases in beverage type or bottler detection that have not yet been encountered in testing.
+
+Results produced by this tool should always be reviewed by a qualified TTB specialist. The Government Warning bold-type requirement, in particular, cannot be verified programmatically and requires manual visual inspection regardless of the tool's output.
+
+This prototype is provided as-is, without warranty of any kind. Feedback and bug reports are encouraged and will inform future development.
+
+---
+---
+
 ## Overview
 
 This tool allows a TTB reviewer to upload a label image and paste the corresponding COLA application text. The tool reads the label via local OCR, then checks whether each required field on the application is present and correct on the label. 
