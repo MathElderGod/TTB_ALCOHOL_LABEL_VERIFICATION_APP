@@ -32,8 +32,23 @@ body {
   min-height: 100vh;
 }
 
+/* The hidden attribute always wins, even over display:flex rules below. */
+[hidden] { display: none !important; }
+
+/* Accessible off-screen pattern: element stays focusable & announced,
+   but is visually removed (used for the file inputs inside dropzones). */
+.visually-hidden {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 /* ── Header ────────────────────────────────────────────────── */
-header {
+.site-header {
   background: var(--navy);
   border-bottom: 3px solid var(--gold);
   padding: 0 24px;
@@ -145,24 +160,23 @@ header {
 
 /* ── Drop zone ─────────────────────────────────────────────── */
 .dropzone {
+  display: block;
   border: 2px dashed var(--gray2);
   border-radius: var(--radius);
   padding: 28px 16px;
   text-align: center;
   cursor: pointer;
   transition: border-color .15s, background .15s;
-  position: relative;
   background: var(--cream);
 }
-.dropzone:hover, .dropzone.drag-over {
+.dropzone:hover,
+.dropzone.drag-over,
+.dropzone:focus-within {
   border-color: var(--navy);
   background: #eef1f7;
 }
-.dropzone input[type=file] {
-  position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%;
-}
-.dropzone-icon { font-size: 28px; margin-bottom: 8px; opacity: .5; }
-.dropzone p    { font-size: 13px; color: var(--gray3); }
+.dropzone-icon { display: block; font-size: 28px; margin-bottom: 8px; opacity: .5; }
+.dropzone-text { display: block; font-size: 13px; color: var(--gray3); }
 .dropzone small { font-size: 11px; color: var(--gray2); margin-top: 4px; display: block; }
 
 .preview-wrap {
@@ -250,7 +264,7 @@ header {
 #status {
   font-size: 13px;
   color: var(--gray3);
-  display: none;
+  display: flex;
   align-items: center;
   gap: 8px;
 }
@@ -273,10 +287,9 @@ header {
   color: var(--red);
   font-size: 13px;
   margin-bottom: 16px;
-  display: none;
 }
 
-/* ── OCR debug ─────────────────────────────────────────────── */
+/* ── OCR / preprocessing debug ─────────────────────────────── */
 .ocr-summary {
   font-size: 12px;
   color: var(--gray3);
@@ -300,9 +313,30 @@ header {
 }
 #ocrDebugWrap { margin-bottom: 20px; }
 
-/* ── Results ───────────────────────────────────────────────── */
-#results { display: none; }
+.pp-grid {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+.pp-item figcaption {
+  font-size: 11px;
+  color: var(--gray3);
+  margin-bottom: 4px;
+}
+.pp-item img {
+  max-width: 340px;
+  max-height: 220px;
+  border: 1px solid var(--gray1);
+  border-radius: var(--radius);
+}
+.pp-note {
+  font-size: 11px;
+  color: var(--gray3);
+  margin-top: 8px;
+}
 
+/* ── Results ───────────────────────────────────────────────── */
 .result-header {
   display: flex;
   align-items: center;
@@ -347,10 +381,10 @@ header {
 .fields-table tr:last-child td { border-bottom: none; }
 .fields-table tr:hover td { background: #fafaf8; }
 
-.field-name     { font-weight: 600; color: var(--navy); min-width: 150px; }
+.field-name      { font-weight: 600; color: var(--navy); min-width: 150px; }
 .field-label-val { color: #444; max-width: 260px; word-break: break-word; }
 .field-form-val  { color: #444; max-width: 260px; word-break: break-word; }
-.field-status   { min-width: 110px; }
+.field-status    { min-width: 110px; }
 
 .tag {
   display: inline-flex;
@@ -375,6 +409,7 @@ header {
 }
 .field-note.mismatch { color: var(--red); }
 .field-note.missing  { color: var(--warn); }
+.field-note.info     { color: var(--navy2); }
 
 .summary-strip {
   padding: 10px 14px;
@@ -399,9 +434,7 @@ footer {
 }
 
 /* ── Second image toggle ───────────────────────────────────── */
-.second-image-toggle-row {
-  margin-bottom: 14px;
-}
+.second-image-toggle-row { margin-bottom: 14px; }
 .toggle-label {
   display: inline-flex;
   align-items: center;
@@ -435,9 +468,7 @@ footer {
   font-size: 11px;
   color: var(--gray3);
 }
-.second-panel-wrap {
-  margin-bottom: 20px;
-}
+#secondImagePanel { margin-bottom: 20px; }
 .panel-head-sub {
   font-size: 11px;
   font-weight: 400;
@@ -452,12 +483,4 @@ footer {
   padding: 10px 14px;
   font-size: 12px;
   color: var(--navy);
-}
-
-/* ── Field note info style ─────────────────────────────────── */
-.field-note.info {
-  color: var(--navy2);
-  font-style: italic;
-  font-size: 11px;
-  margin-top: 4px;
 }
