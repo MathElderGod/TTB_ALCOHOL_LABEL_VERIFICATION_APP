@@ -31,6 +31,15 @@ Ex 4:
 Brand Name: RIVERBEND BREWERY
 Class/type: Pale Ale
 Alcohol Content: 5.4% Alc./Vol
-Net Contents: 12 oz
-Bottler/Producer: RIVERBEND BREWERY
+Net Contents: 12 oz.
+Bottler/Producer: RIVERBEND BREWERY Fresno, CA
+GOVERNMENT WARNING: (1) According to the Surgeon General, women should not drink alcoholic beverages during pregnancy because of the risk of birth defects. (2) Consumption of alcoholic beverages impairs your ability to drive a car or operate machinery, and may cause health problems.
+
+Ex 5:
+
+Brand Name: CAPTAIN JOHN'S
+Class/type: RUM 
+Alcohol Content: 20% Alc./Vol
+Net Contents: 750 ML
+Bottler/Producer: ABC DISTILLERY FREDERICK, MD
 GOVERNMENT WARNING: (1) According to the Surgeon General, women should not drink alcoholic beverages during pregnancy because of the risk of birth defects. (2) Consumption of alcoholic beverages impairs your ability to drive a car or operate machinery, and may cause health problems.
