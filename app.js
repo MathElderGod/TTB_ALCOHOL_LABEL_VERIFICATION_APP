@@ -994,8 +994,10 @@ function checkPresence(type, appVal, labelOCR) {
   if (type === 'volume') {
     const appML = parseVolumeToML(appVal);
     if (appML === null) return { status: 'NOT_FOUND', note: 'Could not parse volume from application.', found: null };
-    // Find all volume expressions in OCR and compare numerically
-    const volRe = /(\d+(?:\.\d+)?)\s*(m\.?l\.?|fl\.?\s*oz\.?|litre|liter|pint|gallon)/gi;
+    // Find all volume expressions in OCR and compare numerically.
+    // Bare "oz" is accepted (many labels print "12 OZ." without "FL");
+    // it sits after "fl oz" in the alternation so the longer form wins.
+    const volRe = /(\d+(?:\.\d+)?)\s*(m\.?l\.?|fl\.?\s*oz\.?|oz\.?|litre|liter|pint|gallon)/gi;
     let m;
     while ((m = volRe.exec(searchText)) !== null) {
       const ocrML = parseVolumeToML(m[0]);
